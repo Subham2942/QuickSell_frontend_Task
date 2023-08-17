@@ -4,7 +4,6 @@ import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { useState } from "react";
 
 const Container = styled.div`
-  position: fixed;
   height: 60px;
   width: 100%;
   background-color: #eee;
@@ -28,19 +27,21 @@ const DisplayMenu = styled.form`
   font-weight: 500;
   font-size: 15px;
   background-color: #fff;
+  cursor: pointer; 
 `;
 const Label = styled.label`
   user-select: none; /* Disable text selection */
   -moz-user-select: none; /* For Firefox */
   -webkit-user-select: none; /* For Chrome, Safari, and Opera */
   -ms-user-select: none; /* For Internet Explorer and Edge */
+  cursor: pointer;
 `;
 
 const DisplaySettings = styled.div`
   height: 90px;
   width: 250px;
   /* border: 1px solid black; */
-  margin: 50px 0 0 20px;
+  margin: -10px 0 0 20px;
   position: fixed;
   background-color: #eee;
   border-radius: 7px;
@@ -49,7 +50,6 @@ const DisplaySettings = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  padding: 10px 0;
 `;
 const Filter = styled.div`
   width: 100%;
