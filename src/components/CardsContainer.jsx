@@ -7,7 +7,6 @@ import Column from "./Column";
 import { fetchInfo } from "../api/fetchData";
 
 const Container = styled.div`
-  /* margin: 0 30px; */
   display: flex;
   flex-wrap: wrap;
   overflow-x: hidden;
@@ -30,9 +29,9 @@ const CardsContainer = () => {
     getInfo();
   }, []);
 
-  // console.log(tickets);
-  // console.log(users);
 
+
+  //So that the statuses can dynamic and if we were come up with a new status, the frontend can automatically adjust
   const getUniqueStatus = (tickets) => {
     const result = new Set();
     for (let ticket of data.tickets) {
@@ -42,12 +41,10 @@ const CardsContainer = () => {
     return Array.from(result);
   };
 
-  // const [groupBy, setGroupBy] = useState("status");
 
   const {groupBy} = useMyContext();
 
   const status = data && data.tickets && getUniqueStatus(data.tickets);
-  console.log(status);
 
   const priority = [0, 1, 2, 3, 4];
 
@@ -55,15 +52,15 @@ const CardsContainer = () => {
     <Container>
       {groupBy === "status" && status
         ? status.map((currStatus) => (
-            <Column heading={currStatus} data={data}  />
+            <Column heading={currStatus} data={data} key={currStatus} />
           ))
         : groupBy === "priority" && priority
         ? priority.map((currPriority) => (
-            <Column heading={currPriority} data={data}  />
+            <Column heading={currPriority} data={data} key={currPriority} />
           ))
         : data?.users &&
           data?.users.map((user) => (
-            <Column heading={user.id} data={data}  />
+            <Column heading={user.id} data={data} key={user.name} />
           ))}
     </Container>
   );

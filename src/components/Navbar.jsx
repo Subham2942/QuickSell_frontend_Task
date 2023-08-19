@@ -9,7 +9,6 @@ const Container = styled.div`
   height: 60px;
   width: 100%;
   background-color: #eee;
-  /* border: 2px solid black; */
   box-shadow: 0px 2px 10px 2px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
@@ -17,10 +16,8 @@ const Container = styled.div`
 
 const DisplayMenu = styled.form`
   margin: 0 0 0 20px;
-  /* border: 1px solid black; */
   width: 100px;
   height: 28px;
-  /* padding: 2px 5px; */
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -42,7 +39,6 @@ const Label = styled.label`
 const DisplaySettings = styled.div`
   height: 90px;
   width: 250px;
-  /* border: 1px solid black; */
   margin: -10px 0 0 20px;
   position: fixed;
   background-color: #eee;
@@ -69,9 +65,6 @@ const Select = styled.select`
 
 const Option = styled.option`
   font-size: 15px;
-  /* &:hover{
-        background-color: gray;
-    } */
 `;
 
 const Navbar = () => {
