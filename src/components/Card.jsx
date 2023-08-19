@@ -61,7 +61,7 @@ const Text = styled.p`
   margin-left: 4px;
 `;
 
-const Card = ({ticket}) => {
+const Card = ({ ticket }) => {
   return (
     <Container>
       <UserId>
@@ -71,7 +71,11 @@ const Card = ({ticket}) => {
         </Circle>
       </UserId>
 
-      <Title>{ticket.title.length > 50 ? ticket.title.slice(0,50) + " ..." : ticket.title}</Title>
+      <Title>
+        {ticket.title.length > 50
+          ? ticket.title.slice(0, 50) + " ..."
+          : ticket.title}
+      </Title>
       <TagContainer>
         <FiMoreHorizontal
           style={{
@@ -84,10 +88,9 @@ const Card = ({ticket}) => {
         <Tag>
           <Circle r={6} />
 
-          {ticket.tag.map(text => (
+          {ticket.tag.map((text) => (
             <Text>{text}</Text>
           ))}
-          
         </Tag>
       </TagContainer>
     </Container>

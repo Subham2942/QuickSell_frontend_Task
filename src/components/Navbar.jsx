@@ -3,6 +3,8 @@ import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { useState } from "react";
 
+import { useMyContext } from "../context/myContext";
+
 const Container = styled.div`
   height: 60px;
   width: 100%;
@@ -80,7 +82,13 @@ const Navbar = () => {
     setShowDisplaySettings(!showDisplaySettings);
   };
 
+  const { groupBy, setGroupBy, ordering, setOrdering} = useMyContext();
 
+  const handleGroupByChange = (e)=>{
+    setGroupBy(e.target.value);
+
+    if(e.target.value === 'priority') setOrdering('title') ;
+  }
   return (
     <>
       <Container>
@@ -99,16 +107,16 @@ const Navbar = () => {
       <DisplaySettings>
         <Filter>
           <Label>Grouping</Label>
-          <Select defaultValue={"status"}>
+          <Select defaultValue={groupBy} onChange={handleGroupByChange}>
             <Option value="status"> Status </Option>
-            <Option value="user"> User </Option>
+            <Option value="userId"> User </Option>
             <Option value="priority"> Priority </Option>
           </Select>
         </Filter>
         <Filter>
           <Label>Ordering</Label>
-          <Select defaultValue={"priority"}>
-            <Option value="priority"> Priority </Option>
+          <Select defaultValue={ordering} onChange={(e)=> setOrdering(e.target.value)}>
+            <Option value="priority" disabled={groupBy === 'priority'} > Priority </Option>
             <Option value="title"> Title </Option>
           </Select>
         </Filter>

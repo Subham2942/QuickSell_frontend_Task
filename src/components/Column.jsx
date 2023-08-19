@@ -6,6 +6,9 @@ import Card from "./Card";
 import { AiOutlinePlus } from "react-icons/ai";
 import { FiMoreHorizontal } from "react-icons/fi";
 
+import { useMyContext } from "../context/myContext";
+
+
 const Container = styled.div`
   min-width: 270px;
   width: 18%;
@@ -61,29 +64,66 @@ const Title = styled.p`
   font-weight: 600;
 `;
 
-const Column = ({heading, data, groupBy}) => {
+const Column = ({ heading, data }) => {
 
-    const modTickets = data.tickets && data.tickets.filter(ticket => {
-        return ticket[groupBy] === heading;
+  const {groupBy} = useMyContext();
+
+  const modTickets =
+    data.tickets &&
+    data.tickets.filter((ticket) => {
+      return ticket[groupBy] === heading;
+    });
+
+  const priorityList = [
+    "No priority", // Priority level 0
+    "Low", // Priority level 1
+    "Medium", // Priority level 2
+    "High", // Priority level 3
+    "Urgent", // Priority level 4
+  ];
+
+  const userNames = data?.users && data.users.map((user) => user.name);
+  console.log("username:", userNames);
+
+  const sortModTicketsByTitle = (data)=>{
+    return data.slice().sort((a,b)=>{
+      const titleA = a.title.toUpperCase();
+      const titleB = b.title.toUpperCase();
+
+      if(titleA < titleB) return -1;
+      if(titleA > titleB) return 1;
+      return 0;
     })
+  }
 
-    const priorityList = [
-        "No priority", // Priority level 0
-        "Low",         // Priority level 1
-        "Medium",      // Priority level 2
-        "High",        // Priority level 3
-        "Urgent"       // Priority level 4
-      ];
+  const sortModTicketsByPriority = (data)=>{
+    return data.slice().sort((a,b)=>{
+      const priorityA = a.priority;
+      const priorityB = b.priority;
 
-    const userNames = data?.users && data.users.map(user => user.name);
-    console.log('username:', userNames);
+      if(priorityA < priorityB) return 1;
+      if(priorityA > priorityB) return -1;
+      return 0;
+    })
+  }
+
+  const {ordering} = useMyContext();
+
+  const sortedTicket = ordering === 'title' ? sortModTicketsByTitle(modTickets) : sortModTicketsByPriority(modTickets);
+
   return (
     <Container>
       <Top>
         <Left>
           <Circle r={15}></Circle>
-          <Title>{groupBy === 'priority' ? priorityList[heading] : groupBy === 'userId' ? userNames[data.users.findIndex(user => user.id === heading)] :  heading }</Title>
-          <Quantity>2</Quantity>
+          <Title>
+            {groupBy === "priority"
+              ? priorityList[heading]
+              : groupBy === "userId"
+              ? userNames[data.users.findIndex((user) => user.id === heading)]
+              : heading}
+          </Title>
+          <Quantity>{modTickets && modTickets.length}</Quantity>
         </Left>
 
         <Right>
@@ -97,10 +137,7 @@ const Column = ({heading, data, groupBy}) => {
       </Top>
 
       <Bottom>
-        {modTickets && modTickets.map(ticket => (
-             <Card ticket={ticket} />
-        ))}
-       
+        {sortedTicket && sortedTicket.map((ticket) => <Card ticket={ticket} />)}
       </Bottom>
     </Container>
   );
