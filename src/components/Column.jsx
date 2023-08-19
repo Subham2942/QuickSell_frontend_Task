@@ -12,7 +12,6 @@ import { useMyContext } from "../context/myContext";
 const Container = styled.div`
   min-width: 270px;
   width: 18%;
-  /* margin-left: 30px ; */
   padding-bottom: 20px;
 `;
 
@@ -83,10 +82,11 @@ const Column = ({ heading, data }) => {
   ];
 
   const userNames = data?.users && data.users.map((user) => user.name);
-  console.log("username:", userNames);
 
+
+  /******************* SORTING *************************/
   const sortModTicketsByTitle = (data)=>{
-    return data.slice().sort((a,b)=>{
+    return data?.slice().sort((a,b)=>{
       const titleA = a.title.toUpperCase();
       const titleB = b.title.toUpperCase();
 
@@ -97,7 +97,7 @@ const Column = ({ heading, data }) => {
   }
 
   const sortModTicketsByPriority = (data)=>{
-    return data.slice().sort((a,b)=>{
+    return data?.slice().sort((a,b)=>{
       const priorityA = a.priority;
       const priorityB = b.priority;
 
@@ -106,6 +106,8 @@ const Column = ({ heading, data }) => {
       return 0;
     })
   }
+
+  /***************************************************/
 
   const {ordering} = useMyContext();
 
@@ -116,7 +118,11 @@ const Column = ({ heading, data }) => {
       <Top>
         <Left>
           <Circle r={15}></Circle>
-          <Title>
+          <Title
+            style={{
+              margin: '0 10px'
+            }}
+          >
             {groupBy === "priority"
               ? priorityList[heading]
               : groupBy === "userId"
@@ -137,7 +143,7 @@ const Column = ({ heading, data }) => {
       </Top>
 
       <Bottom>
-        {sortedTicket && sortedTicket.map((ticket) => <Card ticket={ticket} />)}
+        {sortedTicket && sortedTicket.map((ticket) => <Card ticket={ticket} key={ticket.id} />)}
       </Bottom>
     </Container>
   );

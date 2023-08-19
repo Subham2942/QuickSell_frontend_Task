@@ -89,7 +89,7 @@ const Card = ({ ticket }) => {
           <Circle r={6} />
 
           {ticket.tag.map((text) => (
-            <Text>{text}</Text>
+            <Text key={text} >{text}</Text>
           ))}
         </Tag>
       </TagContainer>
